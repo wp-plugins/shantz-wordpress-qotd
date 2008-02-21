@@ -14,24 +14,24 @@ There are many quotes plugins out there. This one has been started by me (Shanta
 (For Complete Details, go to [my tech blog](http://tech.shantanugoel.com/projects/wordpress/shantz-wordpress-qotd "Shantz WordPress QOTD"))
 
 Features:
-Add quotes to all your posts automatically.
-Widget support - Can also have a widget in the sidebar for quotes.
-Customize and style your quotes with your own text and tags.
-Multiple sources for quotes (paste in admin page, get from file implemented, fetch from web/rss soon to come)
-Multiple patterns for quotes - Random Quote, Quote of the day (all posts display quote of the day), Quote of that day (all posts display quote for their own days)
-Pattern for widget can be different
-Customization for widget can be different
-Add quotes to top or bottom of posts
-Custom template tag to add quote anywhere you want
-Custom quote boundary decalarator tags/Multiline quote support
-Enable/Disable the quotes without deactivating the plugin 
+* Add quotes to all your posts automatically.
+* Widget support - Can also have a widget in the sidebar for quotes.
+* Customize and style your quotes with your own text and tags.
+* Multiple sources for quotes (paste in admin page, get from file implemented, fetch from web/rss soon to come)
+* Multiple patterns for quotes - Random Quote, Quote of the day (all posts display quote of the day), Quote of that day (all posts display quote for their own days)
+* Pattern for widget can be different
+* Customization for widget can be different
+* Add quotes to top or bottom of posts
+* Custom template tag to add quote anywhere you want
+* Custom quote boundary decalarator tags/Multiline quote support
+* Enable/Disable the quotes without deactivating the plugin 
 
 Coming Soon:
-Fetch from web/RSS support
-Quotes Categories
-Pics support for quotes
-Anything else you want
-File selection
+* Fetch from web/RSS support
+* Quotes Categories
+* Pics support for quotes
+* Anything else you want
+* File selection
 
 And more...
 
@@ -85,6 +85,9 @@ You can also see the plugin in action on [my site](http://tech.shantanugoel.com/
 For more updates, go to [shantz-wp-qotd home page](http://tech.shantanugoel.com/projects/wordpress/shantz-wordpress-qotd "My Technophilic Musings")
 
 Version History/ChangeLog:
+
+* Version 1.1.0.1
+	* Cosmetic: Changed readme.txt according to wp-extend standards
 
 * Version 1.1.0
 	* Added Custom tag support for adding quotes anywhere in your posts/pages
