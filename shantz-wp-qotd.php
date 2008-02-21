@@ -3,7 +3,8 @@
 Plugin Name: Shantz Wordpress QOTD 
 Plugin URI: http://tech.shantanugoel.com/projects/wordpress/shantz-wordpress-qotd
 Version: 1.1.0
-Author: <a href="http://blog.shantanugoel.com">Shantz</a>
+Author: Shantanu Goel
+Author URI: http://blog.shantanugoel.com
 Description: This plugin shall give you the ability of adding quotes to anywhere on your blog on the fly. Go to <a href="http://tech.shantanugoel.com/projects/wordpress/shantz-wordpress-qotd">shantz-qp-qotd</a> for updates/help. Also visit my <a href="http://tech.shantanugoel.com">tech site</a>.
  
 Copyright 2007  Shantanu Goel  (email : shantanu [a t ] shantanugoel DOT com)
