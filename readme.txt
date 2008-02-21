@@ -4,7 +4,7 @@ Donate link: http://tech.shantanugoel.com/projects/wordpress/shantz-wordpress-qo
 Tags: wordpress, plugin, quotes, quote of the day, qotd
 Requires at least: 1.5
 Tested up to: 2.3.3
-Stable tag: 1.1.0
+Stable tag: 1.1.0.1
 
 Shantz WP QOTD is the coolest plugin to add quotes to your wordpress blog posts and sidebars in a few easy clicks.
 
