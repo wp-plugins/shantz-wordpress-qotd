@@ -2,10 +2,10 @@
 /* 
 Plugin Name: Shantz Wordpress QOTD 
 Plugin URI: http://tech.shantanugoel.com/projects/wordpress/shantz-wordpress-qotd
-Version: 1.1.0
+Version: 1.2.0
 Author: Shantanu Goel
 Author URI: http://blog.shantanugoel.com
-Description: This plugin shall give you the ability of adding quotes to anywhere on your blog on the fly. Go to <a href="http://tech.shantanugoel.com/projects/wordpress/shantz-wordpress-qotd">shantz-qp-qotd</a> for updates/help. Also visit my <a href="http://tech.shantanugoel.com">tech site</a>.
+Description: This plugin shall give you the ability of adding quotes to anywhere on your blog on the fly. Go to <a href="http://tech.shantanugoel.com/projects/wordpress/shantz-wordpress-qotd">shantz-wp-qotd</a> for updates/help. Also visit my <a href="http://tech.shantanugoel.com">tech site</a>.
  
 Copyright 2007  Shantanu Goel  (email : shantanu [a t ] shantanugoel DOT com)
 
@@ -22,7 +22,6 @@ Copyright 2007  Shantanu Goel  (email : shantanu [a t ] shantanugoel DOT com)
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
 */
 $include_path = ".";
 if (!class_exists("shantzWpQotdPlugin")) {
@@ -43,6 +42,7 @@ if (!class_exists("shantzWpQotdPlugin")) {
                 'quotes_separator' => '',
                 'quote_pattern' => 'qottd',
                 'quote_add_auto' => 'true',
+                'quote_add_pages' => 'true',
                 'quote_add_bottom' => 'true',
                 'quote_static_text_before' => '<b>QOTD:</b><i>',
                 'quote_static_text_after' => '</i>');
@@ -71,6 +71,7 @@ if (!class_exists("shantzWpQotdPlugin")) {
                     $shantzOptions['quotes_separator'] =  '';
                     $shantzOptions['quotes_pattern'] = 'qottd';
                     $shantzOptions['quotes_add_auto'] = 'true';
+		    $shantzOptions['quotes_exclude_pages'] = 'true';
                     $shantzOptions['quotes_add_bottom'] = 'true';
                     $shantzOptions['quotes_static_text_before'] = '<b>QOTD:</b><i>';
                     $shantzOptions['quotes_static_text_after'] = '</i>';
@@ -104,6 +105,9 @@ if (!class_exists("shantzWpQotdPlugin")) {
              if(isset($_POST['shantzWpQotdAddAuto'])) {
                 $shantzOptions['quotes_add_auto'] = $_POST['shantzWpQotdAddAuto'];
             }
+             if(isset($_POST['shantzWpQotdExcludePages'])) {
+                $shantzOptions['quotes_exclude_pages'] = $_POST['shantzWpQotdExcludePages'];
+            }
              if(isset($_POST['shantzWpQotdAddBottom'])) {
                 $shantzOptions['quotes_add_bottom'] = $_POST['shantzWpQotdAddBottom'];
             }
@@ -123,16 +127,16 @@ if (!class_exists("shantzWpQotdPlugin")) {
 <div class=wrap>
 <form method="post" action="<?php echo $_SERVER["REQUEST_URI"]; ?>">
 <h2>Shantanu's Quotes Plugin</h2>
-<h3>Go to <a href="http://tech.shantanugoel.com/projects/wordpress/shantz-wordpress-qotd">shantz-qp-qotd</a> for updates and help. Also visit my <a href="http://tech.shantanugoel.com">tech site</a>.<h3>
+<h3>Go to <a href="http://tech.shantanugoel.com/projects/wordpress/shantz-wordpress-qotd">shantz-wp-qotd</a> for updates and help. Also visit my <a href="http://tech.shantanugoel.com">tech site</a>.<h3>
 
 <h3>Enable the plugin</h3>
 <p>Selecting "No" will disable the plugin. (To disable widget as well, you have to deactivate the pugin, or remove widget from sidebar)</p>
 <p><label for="shantzWpQotdEnable_yes"><input type="radio" id="shantzWpQotdEnable_yes" name="shantzWpQotdEnable" value="true" <?php if ($shantzOptions['enable_qotd_plugin'] == "true") { _e('checked="checked"', "shantzWpQotdPlugin"); }?> /> Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;<label for="shantzWpQotdEnable_no"><input type="radio" id="shantzWpQotdEnable_no" name="shantzWpQotdEnable" value="false" <?php if ($shantzOptions['enable_qotd_plugin'] == "false") { _e('checked="checked"', "shantzWpQotdPlugin"); }?>/> No</label></p>
 
 <h3>Source for your quotes</h3>
-<p><label for="shantzWpQotdSrcBox"><input type="checkbox" name="shantzWpQotdSrcBox" value="true" <?php if ($shantzOptions['quotes_src_box'] == "true") { _e('checked="checked"');} ?>/> Quotes Text Area</label></p>
+<p><label for="shantzWpQotdSrcBox"><input type="hidden" name="shantzWpQotdSrcBox" value="false"/><input type="checkbox" name="shantzWpQotdSrcBox" value="true" <?php if ($shantzOptions['quotes_src_box'] == "true") { _e('checked="checked"');} ?>/> Quotes Text Area</label></p>
 
-<p><label for="shantzWpQotdSrcFile"><input type="checkbox" name="shantzWpQotdSrcFile" value="true" <?php if ($shantzOptions['quotes_src_file'] == "true") { _e('checked="checked"');} ?>/> Quotes From A File ('quotes.txt' kept in plugin folder)</label></p>
+<p><label for="shantzWpQotdSrcFile"><input type="hidden" name="shantzWpQotdSrcFile" value="false"/><input type="checkbox" name="shantzWpQotdSrcFile" value="true" <?php if ($shantzOptions['quotes_src_file'] == "true") { _e('checked="checked"');} ?>/> Quotes From A File ('quotes.txt' kept in plugin folder)</label></p>
 
 <h3>Quotes Separator Tag (e.g. [quote]. Leave blank if each quote is on a new line)</h3>
 <textarea name="shantzWpQotdSeparator" style="width: 10%; height: 20px;"><?php _e(apply_filters('format_to_edit',$shantzOptions['quotes_separator']), 'shantzWpQotdPlugin') ?></textarea>
@@ -146,6 +150,10 @@ if (!class_exists("shantzWpQotdPlugin")) {
 
 <h3>Add quotes to the posts automatically</h3>
 <p><label for="shantzWpQotdAddAuto_yes"><input type="radio" id="shantzWpQotdAddAuto_yes" name="shantzWpQotdAddAuto" value="true" <?php if ($shantzOptions['quotes_add_auto'] == "true") { _e('checked="checked"', "shantzWpQotdPlugin"); }?> /> Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;<label for="shantzWpQotdAddAuto_no"><input type="radio" id="shantzWpQotdAddAuto_no" name="shantzWpQotdAddAuto" value="false" <?php if ($shantzOptions['quotes_add_auto'] == "false") { _e('checked="checked"', "shantzWpQotdPlugin"); }?>/> No</label></p>
+
+<p>
+<label for="shantzWpQotdExcludePages"><input type="hidden" name="shantzWpQotdExcludePages" value="false"/><input type="checkbox" name="shantzWpQotdExcludePages" value="true" <?php if ($shantzOptions['quotes_exclude_pages'] == "true") { _e('checked="checked"');} ?>/> Exclude pages from automatically added quotes (This option works only for WordPress version 2.1 and above)</label>
+</p>
 
 <h3>Quotes to be added at the top of the posts, or bottom.</h3>
 <p><label for="shantzWpQotdAddBottom_top"><input type="radio" id="shantzWpQotdAddBottom_top" name="shantzWpQotdAddBottom" value="false" <?php if ($shantzOptions['quotes_add_bottom'] == "false") { _e('checked="checked"', "shantzWpQotdPlugin"); }?> /> Top</label>&nbsp;&nbsp;&nbsp;&nbsp;<label for="shantzWpQotdAddBottom_bottom"><input type="radio" id="shantzWpQotdAddBottom_bottom" name="shantzWpQotdAddBottom" value="true" <?php if ($shantzOptions['quotes_add_bottom'] == "true") { _e('checked="checked"', "shantzWpQotdPlugin"); }?>/> Bottom</label></p>
@@ -171,13 +179,19 @@ if (!class_exists("shantzWpQotdPlugin")) {
                 $content = preg_replace('/<!--\s*shantz-wp-qotd\s*(\w*)\s*-->/ie', '$this->addQuote(\'$1\')', $content);
 
                 if($shantzOptions['quotes_add_auto'] == "true") {
-                    $quote = $this->addQuote('default');
-                    if($shantzOptions['quotes_add_bottom'] == "true") {
-                        $content .= $quote;
-                    }
-                    else {
-                        $content = $quote.$content;
-                    }
+		    global $wp_version;
+		    global $post;
+		    if( (version_compare($wp_version, '2.1', '<')) || 
+		    	($post->post_type != 'page') || 
+		    	($shantzOptions['quotes_exclude_pages'] == "false") ){		    
+                    	$quote = $this->addQuote('default');
+                    	if($shantzOptions['quotes_add_bottom'] == "true") {
+                            $content .= $quote;
+                    	}
+                    	else {
+                            $content = $quote.$content;
+                    	}
+		    }
                 }
             }
             return $content;
@@ -376,7 +390,7 @@ if (class_exists("shantzWpQotdWidget")) {
 if (isset($shantzWpQotdInstance)) {
 
     add_action('admin_menu', 'shantzWpQotd_ap');
-    add_action('activate_shantz-wp-qotd/shantz-qp-qotd.php', array(&$shantzWpQotdInstance, 'init'));
+    add_action('activate_shantz-wp-qotd/shantz-wp-qotd.php', array(&$shantzWpQotdInstance, 'init'));
 
     add_filter('the_content', array(&$shantzWpQotdInstance, 'process_quote'));
 }
