@@ -2,7 +2,7 @@
 /* 
 Plugin Name: Shantz Wordpress QOTD 
 Plugin URI: http://tech.shantanugoel.com/projects/wordpress/shantz-wordpress-qotd
-Version: 1.2.0
+Version: 1.2.1
 Author: Shantanu Goel
 Author URI: http://blog.shantanugoel.com
 Description: This plugin shall give you the ability of adding quotes to anywhere on your blog on the fly. Go to <a href="http://tech.shantanugoel.com/projects/wordpress/shantz-wordpress-qotd">shantz-wp-qotd</a> for updates/help. Also visit my <a href="http://tech.shantanugoel.com">tech site</a>.
@@ -27,6 +27,7 @@ $include_path = ".";
 if (!class_exists("shantzWpQotdPlugin")) {
 	class shantzWpQotdPlugin {
         var $adminOptionsName = "shantzWpQotdPluginAdminOptions";
+        var $wpCompat;
 
 		function shantzWpQotdPlugin() { //constructor
 			
@@ -152,7 +153,7 @@ if (!class_exists("shantzWpQotdPlugin")) {
 <p><label for="shantzWpQotdAddAuto_yes"><input type="radio" id="shantzWpQotdAddAuto_yes" name="shantzWpQotdAddAuto" value="true" <?php if ($shantzOptions['quotes_add_auto'] == "true") { _e('checked="checked"', "shantzWpQotdPlugin"); }?> /> Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;<label for="shantzWpQotdAddAuto_no"><input type="radio" id="shantzWpQotdAddAuto_no" name="shantzWpQotdAddAuto" value="false" <?php if ($shantzOptions['quotes_add_auto'] == "false") { _e('checked="checked"', "shantzWpQotdPlugin"); }?>/> No</label></p>
 
 <p>
-<label for="shantzWpQotdExcludePages"><input type="hidden" name="shantzWpQotdExcludePages" value="false"/><input type="checkbox" name="shantzWpQotdExcludePages" value="true" <?php if ($shantzOptions['quotes_exclude_pages'] == "true") { _e('checked="checked"');} ?>/> Exclude pages from automatically added quotes (This option works only for WordPress version 2.1 and above)</label>
+<label for="shantzWpQotdExcludePages"><input type="hidden" name="shantzWpQotdExcludePages" value="false"/><input type="checkbox" name="shantzWpQotdExcludePages" value="true" <?php if ($shantzOptions['quotes_exclude_pages'] == "true") { _e('checked="checked"');} ?>/> Exclude pages from automatically added quotes</label>
 </p>
 
 <h3>Quotes to be added at the top of the posts, or bottom.</h3>
@@ -174,15 +175,15 @@ if (!class_exists("shantzWpQotdPlugin")) {
 
         function process_quote($content = '') {
             $shantzOptions = $this->getAdminOptions();
+            $wpCompat = (version_compare($wp_version, '2.1', '<'));
             if($shantzOptions['enable_qotd_plugin'] == "true") {
 
                 $content = preg_replace('/<!--\s*shantz-wp-qotd\s*(\w*)\s*-->/ie', '$this->addQuote(\'$1\')', $content);
 
                 if($shantzOptions['quotes_add_auto'] == "true") {
-		    global $wp_version;
 		    global $post;
-		    if( (version_compare($wp_version, '2.1', '<')) || 
-		    	($post->post_type != 'page') || 
+		    if( (($wpCompat) && ($post->post_type != 'page')) || 
+                (!($wpCompat) && ($post->post_status !='static')) ||
 		    	($shantzOptions['quotes_exclude_pages'] == "false") ){		    
                     	$quote = $this->addQuote('default');
                     	if($shantzOptions['quotes_add_bottom'] == "true") {
