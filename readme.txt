@@ -3,8 +3,8 @@ Contributors: shantzg001
 Donate link: http://tech.shantanugoel.com/projects/wordpress/shantz-wordpress-qotd
 Tags: wordpress, plugin, quotes, quote of the day, qotd, Post, posts, pages, Page, widget
 Requires at least: 1.5
-Tested up to: 2.3.3
-Stable tag: 1.2.1
+Tested up to: 2.5
+Stable tag: 1.2.2
 
 Shantz WP QOTD is the coolest plugin to add quotes to your wordpress blog posts and sidebars in a few easy clicks.
 
@@ -105,6 +105,9 @@ You can also see the plugin in action on [my site](http://tech.shantanugoel.com/
 For more updates, go to [shantz-wp-qotd home page](http://tech.shantanugoel.com/projects/wordpress/shantz-wordpress-qotd "My Technophilic Musings")
 
 Version History/ChangeLog:
+
+* Version 1.2.2
+	* Fixed a bug because of which quotes were blank some times.
 
 * Version 1.2.1
 	* Option to exclude pages from displaying quotes is also compatible with wordpress version < 2.1

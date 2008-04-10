@@ -2,7 +2,7 @@
 /* 
 Plugin Name: Shantz Wordpress QOTD 
 Plugin URI: http://tech.shantanugoel.com/projects/wordpress/shantz-wordpress-qotd
-Version: 1.2.1
+Version: 1.2.2
 Author: Shantanu Goel
 Author URI: http://blog.shantanugoel.com
 Description: This plugin shall give you the ability of adding quotes to anywhere on your blog on the fly. Go to <a href="http://tech.shantanugoel.com/projects/wordpress/shantz-wordpress-qotd">shantz-wp-qotd</a> for updates/help. Also visit my <a href="http://tech.shantanugoel.com">tech site</a>.
@@ -219,6 +219,12 @@ if (!class_exists("shantzWpQotdPlugin")) {
             }
             $quote_list = explode ($separator, $quotes_string);
             $num_quotes = count($quote_list);
+
+            if ($quote_list[$num_quote] == '')
+            {
+                array_pop ($quote_list);
+                $num_quotes--;
+            }
 
             if($num_quotes > 0) {
                 
